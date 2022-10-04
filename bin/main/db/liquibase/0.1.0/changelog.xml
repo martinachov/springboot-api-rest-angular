@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+  http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+
+    <changeSet id="0.1.0/changelog.0" author="mmerca" logicalFilePath="0.1.0/changelog.xml">
+        <tagDatabase tag="0.1.0" />
+    </changeSet>
+
+    <!-- 
+    Hibernate: create table movimiento (id bigint not null, comprobante varchar(255), monto decimal(19,2), partida_id bigint, primary key (id))
+    Hibernate: create table partida (id bigint not null, ejercicio integer not null, monto_inicial decimal(19,2) not null, objeto_gasto varchar(255) not null, saf varchar(255) not null, primary key (id))
+    Hibernate: create sequence hibernate_sequence start with 1 increment by 1
+    Hibernate: alter table movimiento add constraint FK7k9uoy226kukmkrdhr20ot78r foreign key (partida_id) references partida
+    -->
+
+    <changeSet id="0.1.0/changelog.1" author="mmerca" logicalFilePath="0.1.0/changelog.xml">
+        <createSequence sequenceName="partida_sequence" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="0.1.0/changelog.2" author="mmerca" logicalFilePath="0.1.0/changelog.xml">
+        <createTable tableName="partida">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="pk_partida_id" />
+            </column>
+            <column name="ejercicio" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="monto_inicial" type="decimal(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="objeto_gasto" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="saf" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="0.1.0/changelog.3" author="mmerca" logicalFilePath="0.1.0/changelog.xml">
+        <createSequence sequenceName="movimiento_sequence" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="0.1.0/changelog.4" author="mmerca" logicalFilePath="0.1.0/changelog.xml">
+        <createTable tableName="movimiento">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="pk_movimiento_id" />
+            </column>
+            <column name="comprobante" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="monto" type="decimal(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="partida_id" type="bigint">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="0.1.0/changelog.5" author="mmerca" logicalFilePath="0.1.0/changelog.xml">
+        <addForeignKeyConstraint baseTableName="movimiento" baseColumnNames="partida_id" constraintName="fk_movimiento_partida" referencedTableName="partida" referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

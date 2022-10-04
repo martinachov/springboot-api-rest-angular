@@ -1,0 +1,21 @@
+# ----------------------------------------
+# OPENTRACING PARAMETERS
+# ----------------------------------------
+#opentracing:
+ # jaeger:
+  #  enable-b3-propagation: true  
+   # log-spans: true 
+    #http-sender.url: http://localhost:14268/api/traces
+
+# ----------------------------------------
+# AXON PARAMETERS
+# ----------------------------------------
+#axon:
+ #  axonserver:
+  #    servers: localhost:8124
+
+# ----------------------------------------
+# APPLICATION PARAMETERS
+# ----------------------------------------
+corsAllowedOrigin : "*"
+logging.config: classpath:logback-local.xml

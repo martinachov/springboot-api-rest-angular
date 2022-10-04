@@ -1,0 +1,37 @@
+{
+  "name": "openshift-app-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Proyecto para ejecutar los tests funcionales con Cypress",
+  "scripts": {
+    "ng": "ng",
+    "lint": "eslint cypress/**/*.js",
+    "cypress:open": "cypress open --env configFile=local-cypress-config.json",
+    "npm:ci": "npm ci --prefer-offline --no-audit -q",
+    "cypress:clean": "cypress cache prune",
+    "cypress:ci": "cross-env no_proxy='.mecon.ar' cross-env-shell cypress run --spec $SPECS",
+    "cypress:ci:local": "cross-env no_proxy='.mecon.ar' cross-env-shell cypress run --env configFile=local-cypress-config.json",
+    "cypress:ci:local:powershell": "npm ci --prefer-offline --no-audit -q && cross-env no_proxy='.mecon.ar' cypress run --env configFile=local-cypress-config.json",
+    "cypress:ci:local:unix": "nvm install && npm ci --prefer-offline --no-audit -q && cross-env no_proxy='.mecon.ar' cypress run --env configFile=local-cypress-config.json",
+    "cypress:local:ch": "cypress run --headless --browser chrome --env configFile=local-cypress-config.json",
+    "cypress:full-local": "npm install && npm run cypress:local",
+    "cypress:ci:dummy": "cross-env-shell cypress run --env configFile=ci-cypress-config.json --spec cypress/integration/ci_dummy.js"
+  },
+  "keywords": [],
+  "author": "mbecca",
+  "license": "DGSIAF",
+  "dependencies": {
+    "cross-env": "^7.0.2",
+    "cypress": "^6.0.0",
+    "cypress-wait-until": "^1.7.1",
+    "fs-extra": "^9.0.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.14.0",
+    "eslint-plugin-chai-friendly": "^0.6.0",
+    "eslint-plugin-cypress": "^2.11.2",
+    "npm-check-updates": "^10.2.2"
+  },
+  "repository": {}
+}

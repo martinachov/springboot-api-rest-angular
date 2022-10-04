@@ -1,0 +1,87 @@
+sourceSets {
+    integrationTests {
+        java {
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+            srcDirs = ['src/integration-test/java'] 
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
+}
+
+configurations {
+    integrationTestsImplementation.extendsFrom testImplementation
+    integrationTestsRuntimeOnly.extendsFrom testRuntimeOnly
+    integrationTestsRuntimeOnly.extendsFrom liquibaseRuntime
+}
+
+compileTestJava {
+	sourceCompatibility = 11
+	targetCompatibility = 11
+	options.compilerArgs += '-parameters'
+}
+
+
+dependencies {
+	testImplementation ('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+task integrationTests(type: Test) {
+	dependsOn cleanIntegrationTests
+    useJUnitPlatform()
+	testClassesDirs = sourceSets.integrationTests.output.classesDirs
+    classpath = sourceSets.integrationTests.runtimeClasspath
+}
+
+task jacocoIntegrationTestsReport (type: JacocoReport) {
+	getExecutionData().setFrom(fileTree(buildDir).include("/jacoco/integrationTests.exec"))
+    getSourceDirectories().setFrom(sourceSets.main.java.srcDirs)
+  	getClassDirectories().setFrom(sourceSets.main.java.outputDir)
+    def reportDir = project.reporting.file("jacoco/integrationTests/jacocoIntegrationTestsReport.xml")
+    
+    reports {
+    	xml.enabled true
+        xml.destination = reportDir
+    	html.enabled false
+    	csv.enabled false
+    }
+    doLast {
+        println "See report at: file://${reportDir.toURI().path}"
+    }
+}
+
+test {
+	dependsOn cleanTest
+	useJUnitPlatform()
+	testLogging.exceptionFormat "full"
+	beforeTest { testDescriptor ->
+	  logger.lifecycle("Running: " + testDescriptor)
+	}
+	finalizedBy jacocoTestReport		
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		csv.enabled false
+		html.enabled true
+	}
+}
+
+jacocoLogTestCoverage { 
+	enabled = true
+}
+
+jacocoLogIntegrationTestsCoverage {
+	enabled = false
+}
+
+jacocoAggregatedReport {
+	reports {
+		xml.enabled true
+		csv.enabled false
+		html.enabled true
+	}
+}

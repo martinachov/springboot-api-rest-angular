@@ -1,0 +1,11 @@
+repositories {
+	mavenLocal()
+	maven {
+	  url "http://dgsiaf-nexus.mecon.ar:8081/repository/dgsiaf/"
+	  allowInsecureProtocol true
+	  metadataSources {
+            mavenPom()
+            artifact()
+         }  
+	}
+}

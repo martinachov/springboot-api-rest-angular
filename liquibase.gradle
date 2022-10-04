@@ -1,0 +1,28 @@
+dependencies {
+  liquibaseRuntime 'org.liquibase:liquibase-core:4.8.0'
+  liquibaseRuntime 'ch.qos.logback:logback-core'
+  liquibaseRuntime 'ch.qos.logback:logback-classic'
+  liquibaseRuntime group: 'com.oracle.database.jdbc', name: 'ojdbc11', version: ojdbc_version
+  liquibaseRuntime 'info.picocli:picocli:4.6.3'
+  
+  //Borrar cuando se usa el starter para una nueva apliación y no sea necesaria
+  liquibaseRuntime 'com.h2database:h2:2.1.210'
+  liquibaseRuntime 'org.postgresql:postgresql'	
+}
+
+liquibase {
+  activities {
+    main { 
+      contexts System.properties['liquibase.contexts']
+      changeLogFile 'src/main/resources/db/liquibase/db.changelog.xml'
+      url System.properties['liquibase.url']
+      username System.properties['liquibase.username']
+      password System.properties['liquibase.password']
+      classpath "$rootDir"
+    }  
+  }
+}
+
+//Ejemplo de invocación:
+//./gradlew update -Dliquibase.url=jdbc:oracle:thin:@172.27.24.138:1522:DES2SICI -Dliquibase.username=PROD_SICI -Dliquibase.password=PROD_SICI
+//./gradlew update -Dliquibase.url=jdbc:h2:file:~/presu/data/db -Dliquibase.username=presu -Dliquibase.password=presu

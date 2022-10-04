@@ -1,0 +1,47 @@
+# Se invocan mediante la extension rest-client de vs-code.
+@hostname = http://localhost:8080
+
+# Recupera todas las partidas disponibles
+GET {{hostname}}/api/partidas
+
+###
+# Recupera la partida con id=3
+GET {{hostname}}/api/partidas/3
+
+###
+# Agrega una partida
+POST {{hostname}}/api/partidas
+content-type: application/json
+
+{
+	"objetoGasto" : "3.4.2.0",
+	"saf" : "313",
+	"ejercicio" : 2022,
+	"montoInicial" : 1500.50
+}
+
+###
+# Recupera los movimientos de la partida con id=1
+GET {{hostname}}/api/partidas/1/movimientos
+
+###
+# Crea un movimiento para la partida con id=1 si los movimientos actuales no superan 97516.14
+POST {{hostname}}/api/movimientos HTTP/1.1
+content-type: application/json
+
+{
+    "monto": 100,
+    "comprobante": "2022-OCA-313-1",
+    "partidaId": 1
+  }
+
+###
+# Falla por falta de saldo en la partida con id=1 para un movimiento
+POST {{hostname}}/api/movimientos HTTP/1.1
+content-type: application/json
+
+{
+    "monto": 100,
+    "comprobante": "2022-OCA-313-1",
+    "partidaId": 1
+  }

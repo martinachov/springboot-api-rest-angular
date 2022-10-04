@@ -1,0 +1,10 @@
+pluginManagement {
+  repositories {
+	maven { 
+	  url "http://dgsiaf-nexus.mecon.ar:8081/repository/dgsiaf/"
+	  allowInsecureProtocol true
+	}
+  }
+}
+
+rootProject.name = 'presupuesto-consultas-code'

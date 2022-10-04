@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <h2 class="sub-header">Partidas</h2>
+    <div class="col">
+      <table class="table table-hover table-bordered table-sm">
+        <caption>Cantidad de partidas: {{cantidadPartidas}}</caption>
+        <thead class="table-light">
+          <tr class="table-primary">
+            <th>SAF</th>
+            <th>Ejercicio</th>
+            <th>Objeto de Gasto</th>
+            <th>Monto Inicial</th>
+            <th>Movimientos</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let partida of partidas">
+          <tr class="table-secondary">
+            <td>{{partida.saf}}</td>
+            <td>{{partida.ejercicio}}</td>
+            <td>{{partida.objetoGasto}}</td>
+            <td>{{partida.montoInicial}}</td>
+            <td  class="button_col">
+              <button (click)="buscarMovimientosDePartida(partida)" type="button" class="btn btn-light">
+                Buscar Movimientos
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="isPartidaSeleccionada(partida)">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td colspan="2">
+              <table class="table table-hover table-bordered table-sm">
+                <caption>Cantidad de movimientos: {{movimientos?.length}}</caption>
+                <thead>
+                  <tr class="table-light">
+                    <td align="center">Comprobante</td>
+                    <td align="right">Monto</td>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let movimiento of movimientos">
+                  <tr>
+                    <td align="left">{{movimiento.comprobante}}</td>
+                    <td align="right">{{movimiento.monto}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+      </table>
+    </div>
+  </div>
+ 

@@ -1,0 +1,51 @@
+sonarqube {
+    properties {
+	  
+	  property "sonar.scm.disabled", true
+      properties["sonar.junit.reportPaths"] += "${project.buildDir}/test-results/integrationTests"
+      properties["sonar.tests"] += sourceSets.integrationTests.java.srcDirs
+      properties["sonar.coverage.jacoco.xmlReportPaths"] = "${project.buildDir}/reports/jacoco/jacocoAggregatedReport/jacocoAggregatedReport.xml"
+      properties["sonar.dependencyCheck.htmlReportPath"] = "${project.buildDir}/reports/dependency-check-report.html"
+      properties["sonar.dependencyCheck.reportPath"] = "${project.buildDir}/reports/dependency-check-report.xml"
+
+    }
+}
+
+dependencyCheck {
+
+
+	autoUpdate= false
+
+	format='ALL'
+	
+	analyzers {
+	
+		pyDistributionEnabled= false
+		pyPackageEnabled= false
+		rubygemsEnabled= false
+		opensslEnabled= false
+		nuspecEnabled= false
+		nugetconfEnabled= false
+		assemblyEnabled= false
+		msbuildEnabled= false
+		cmakeEnabled= false
+		autoconfEnabled= false
+		composerEnabled= false
+		cocoapodsEnabled= false
+		swiftEnabled= false
+		bundleAuditEnabled= false
+		golangDepEnabled= false
+		golangModEnabled= false
+		
+		retirejs {
+			retireJsUrl= 'http://dgsiaf-nexus.mecon.ar:8081/repository/raw.githubusercontent.com/Retirejs/retire.js/master/repository/jsrepository.json'
+		}
+		ossIndex {
+			enabled = false
+		}
+	}
+	
+	data {
+	    directory=project.findProperty('dependencyCheck.data.directory')!=null ? project.findProperty('dependencyCheck.data.directory') : System.getProperty("user.home")+"/nvd"
+	}
+}

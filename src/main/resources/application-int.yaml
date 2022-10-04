@@ -1,0 +1,16 @@
+baseUrl: http://presupuesto.com:8080
+
+spring:
+  h2.console.enabled: true
+  datasource:
+    # driverClassName: org.h2.Driver
+    url: jdbc:h2:file:./presu-db/db
+    username: presu
+    password: presu
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      # Default value
+      # ddl-auto: none
+      # ddl-auto: validate

@@ -1,0 +1,65 @@
+# ----------------------------------------
+# SPRING PROPERTIES
+# ----------------------------------------
+spring:
+  application:
+    name: PresupuestoConsultasAppStarter
+  mvc:
+    async:
+      request-timeout: -1  
+  main:
+    allow-circular-references: true #Analizar siempre si es necesario
+  http:
+    log-request-details: true 
+  banner:
+    location: classpath:banner.txt
+  cloud:
+    kubernetes:
+      config:
+        enableApi: false
+        paths: /configMaps/presupuesto-consultas-configmap.yml
+      secrets:
+        enableApi: false
+        paths: /secrets/ 
+  lifecycle.timeout-per-shutdown-phase: 30s
+
+# ----------------------------------------
+# EMBEDED TOMCAT PROPERTIES
+# Configura tomcat para revisar los headers http
+# de esta forma entiende https cuando se encuentra
+# detrás de un proxy reverso
+# ----------------------------------------
+
+server:
+  tomcat:    
+    remoteip:
+      remote-ip-header: x-forwarded-for
+      protocol-header: x-forwarded-proto
+  shutdown: graceful
+
+# ----------------------------------------
+# ACTUATOR PROPERTIES
+# ----------------------------------------
+management:
+  info:
+    git:
+      mode: full
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  security:
+    enabled: false
+  server:
+    port: 9080
+  metrics:
+    web:
+      server:
+        request: 
+          autotime:
+            enabled: true        
+
+# ----------------------------------------
+# APPLICATION PARAMETERS
+# ----------------------------------------
+# Usar application.yml para registrar properties de aplicación.

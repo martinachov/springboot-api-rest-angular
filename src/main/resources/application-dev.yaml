@@ -1,0 +1,15 @@
+spring:
+  h2.console.enabled: true  
+  liquibase:
+    enabled: false 
+  datasource:
+    url: jdbc:h2:mem:presupuestoConsultas
+    username: gs
+    password: gs
+  jpa:
+    show-sql: true
+    hibernate:
+       ddl-auto: update  
+opentracing:
+  jaeger:
+    enabled: false

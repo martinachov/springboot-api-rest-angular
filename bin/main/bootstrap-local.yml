@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    kubernetes:
+      enabled: false
+      
+# ----------------------------------------
+# APPLICATION PARAMETERS
+# ----------------------------------------
+# Usar application.yml para registrar properties de aplicación.
